@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: exampleuser
+      POSTGRES_PASSWORD: examplepass
+      POSTGRES_DB: strapi
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+  strapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.strapi
+    container_name: strapi_container
+    env_file:
+      - .env
+    ports:
+      - "1337:1337"
+
+volumes:
+  postgres_data:
